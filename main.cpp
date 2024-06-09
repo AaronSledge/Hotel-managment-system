@@ -2,12 +2,18 @@
 #include <stdexcept>
 #include <string>
 
-using namespace std;
+using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::runtime_error;
 
 void passwordChecker(string &password);
 
+string  hashFunction(string &password);
+
 int main() {
-   try {
+   
     string username;
     string password;
     cout << "Please Enter Username" << endl;
@@ -26,10 +32,10 @@ int main() {
     
     cout << username << endl;
     cout << password << endl;
-    }
-    catch(const exception &e) {
-        cout << "Exception " << e.what() << endl;
-    }
+
+    string hashedpassword = hashFunction(password);
+
+    cout << hashedpassword << endl;
     return 0;
 }
 
@@ -43,4 +49,13 @@ void passwordChecker(string &password) {
         passwordChecker(password);
     }
     return;
+}
+
+string hashFunction(string &password) {
+    int hash = 13;
+    for(std::size_t i = 0; i < password.length(); ++i) {
+        hash = hash * 31 + password.at(i);
+    }
+
+    return std::to_string(hash);
 }
