@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <sqlite3.h>
+#include "header/User.hpp"
 using std::string;
 using std::cin;
 using std::cout;
@@ -41,13 +42,16 @@ int main() {
 
 
     string hashedpassword = hashFunction(password);
-    
+
     if(firstTime == "yes") {
        registerFirstTime(username, hashedpassword); 
     }
     else if(firstTime == "no") {
         login(username, hashedpassword);
     }
+
+    User currentUser = User(username, hashedpassword);
+    cout << currentUser.getUsername() << endl;
     return 0;
 }
 
