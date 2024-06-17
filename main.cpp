@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <sqlite3.h>
 #include "header/User.hpp"
+#include "header/Hotel.hpp"
 using std::string;
 using std::cin;
 using std::cout;
@@ -17,6 +18,8 @@ void registerFirstTime(string &username, string &hashedpassword);
 void login(string &username, string &hashedpassword);
 
 string hashFunction(const string &password);
+
+void printWelcomeMenu();
 
 int main() {
     cout << "Are you signing in for the first time" << endl;
@@ -51,7 +54,8 @@ int main() {
     }
 
     User currentUser = User(username, hashedpassword);
-    cout << currentUser.getUsername() << endl;
+    Hotel currentHotel;
+
     return 0;
 }
 

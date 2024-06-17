@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include "Room.hpp"
 using std::string;
 
 class User{
@@ -9,12 +9,12 @@ class User{
         string username;
         string password;
         double balance;
-        int roomNum;
+        Room* myRoom;
 
     public:
         User(const string &username, const string &password) : username(username), password(password) {
             balance = 200.0;
-            roomNum = 0;
+            myRoom = nullptr;
         } 
         double getBalance();
         string getUsername();
