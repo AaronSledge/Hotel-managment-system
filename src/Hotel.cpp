@@ -38,6 +38,10 @@ Hotel::~Hotel() {
 }
 
 
-void Hotel::checkIn(int roomNum) {
-
+void Hotel::printAvilableRooms() {
+    for(Room* currentRoom: roomList) {
+        if(currentRoom->isRoomAvilable()) {
+            std::cout << currentRoom->getRoomNum() << std::endl;
+        }
+    }
 }

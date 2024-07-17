@@ -2,6 +2,7 @@
 
 #include <string>
 #include "Room.hpp"
+#include "Hotel.hpp"
 using std::string;
 
 class User{
@@ -18,6 +19,7 @@ class User{
         } 
         double getBalance();
         string getUsername();
+        void logIn(Hotel currentHotel);
         void logOut();
         void setRoomNum(int number);
         int getRoomNum();

@@ -11,6 +11,7 @@ class Hotel {
     public:
         Hotel();
         ~Hotel();
+        void printAvilableRooms();
         void checkIn(int roomNum);
         void checkOut();
 };

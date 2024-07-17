@@ -9,5 +9,6 @@ class Room {
         Room(int roomNum, bool isAvilable) : roomNum(roomNum), isAvilable(isAvilable) {}
         void getRoomService();
         int getRoomNum();
+        bool isRoomAvilable();
         void cleanService();
 };

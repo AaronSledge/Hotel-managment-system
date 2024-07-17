@@ -19,7 +19,7 @@ void login(string &username, string &hashedpassword);
 
 string hashFunction(const string &password);
 
-void printWelcomeMenu();
+void printWelcomeMenu(User &currentUser, const Hotel &currentHotel);
 
 int main() {
     cout << "Are you signing in for the first time" << endl;
@@ -55,6 +55,8 @@ int main() {
 
     User currentUser = User(username, hashedpassword);
     Hotel currentHotel;
+
+    printWelcomeMenu(currentUser, currentHotel);
 
     return 0;
 }
@@ -146,4 +148,21 @@ void login(string &username, string &hashedpassword) {
     }
     sqlite3_finalize(stmt);
     sqlite3_close(DB);
+}
+
+void printWelcomeMenu(User &currentUser, const Hotel &currentHotel) {
+    cout << "Welcome to *** hotel. We hope you have a good time" << endl;
+
+    cout << "Type c if you want to see avilable rooms" << endl;
+    cout << "Type l if you are ready to leave and check out" << endl;
+    cout << "Type r if you want to go to the resturant" << endl;
+
+    char input;
+    if(not(cin >> input)) {
+        throw runtime_error("Couldn't get input");
+    }
+
+    if(input == 'c') {
+        currentUser.logIn(currentHotel);
+    }
 }
