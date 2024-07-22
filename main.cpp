@@ -170,7 +170,6 @@ void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
     cout << "Type g if you want to go to the casino" << endl;
 
     cout << "Make sure to log out when you are done or progress may not be saved" << endl;
-    cout << currentUser.getRoomNum() << endl;
     char input;
     if(not(cin >> input)) {
         throw runtime_error("Couldn't get input");
@@ -181,7 +180,13 @@ void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
         printWelcomeMenu(currentUser, currentHotel);
     }
 
+    if(input == 'g') {
+        currentUser.gamble();
+        printWelcomeMenu(currentUser, currentHotel);
+    }
     if(input == 'l') {
         currentUser.logOut();
     }
+
+
 }

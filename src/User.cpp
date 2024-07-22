@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <stdexcept>
+#include <cstdlib>
+#include <time.h>
 
 using std::cout;
 using std::endl;
@@ -57,6 +59,71 @@ Room* User::getRoom() {
 
 int User::getRoomNum() {
     return roomNum;
+}
+
+void User::gamble() {
+    cout << "Welcome to the casino!" << endl;
+    cout << "Pick a random number between 1 and 12. If you guess correctly you get double the money you bet." << endl;
+    cout << "How much are you willing to bet?" << endl;
+    int bet;
+    do {
+        if(not(cin >> bet)) {
+            throw std::runtime_error("Could not get bet input");
+        }
+
+        if(bet > balance) {
+            cout << "Insufficent funds: Please choose lower amount" << endl;
+        }
+    } while(bet > balance);
+
+    cout << "Pick a number between 1 and 12" << endl;
+
+    int guessNum;
+    
+    srand(time(0));
+    char playAgain;
+    do {
+        do {
+            if(not(cin >> guessNum)) {
+                throw std::runtime_error("Could not get guess input");
+            }
+        
+            if(guessNum < 1 || guessNum > 12) {
+                cout << "Your guess must be between 1 and 12, try again" << endl;
+            }
+        } while(guessNum < 1 || guessNum > 12);
+
+
+        int random = rand() % 12 + 1;
+        if(random < 1) {
+            throw std::underflow_error("Random failed, too low");
+        }
+        else if(random > 12) {
+            throw std::overflow_error("Random failed, too high");
+        }
+
+        if(balance <= 0) {
+            cout << "You are out of money, sorry." << endl;
+            return;
+        }
+
+        if(random == guessNum) {
+            balance += bet;
+            cout << "congrats you won, want to play again? (y/n)" << endl;
+            if (not(cin >> playAgain)) {
+                throw std::runtime_error("couldn't read playAgain");
+            }
+        }
+        else {
+            balance -= bet;
+            cout << "Sorry that wasn't the right number. The computer chose " << random << endl;
+            cout << "Do you want to play again (y/n)?" << endl;
+            if (not(cin >> playAgain)) {
+                throw std::runtime_error("couldn't read playAgain");
+            }
+        }
+    } while(playAgain == 'y');
+    
 }
 
 void User::logOut() {

@@ -20,4 +20,5 @@ class User{
         void setRoom(Room* currentRoom);
         int getRoomNum();
         Room* getRoom();
+        void gamble();
 };
