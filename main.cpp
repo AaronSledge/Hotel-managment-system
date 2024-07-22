@@ -19,9 +19,10 @@ void login(string &username, string &hashedpassword);
 
 string hashFunction(const string &password);
 
-void printWelcomeMenu(User &currentUser, const Hotel &currentHotel);
+void printWelcomeMenu(User &currentUser, Hotel &currentHotel);
 
 int main() {
+    //prompt user to sign in for the first time or login existing account
     cout << "Are you signing in for the first time" << endl;
     string firstTime;
     if(not(cin >> firstTime)) {
@@ -41,6 +42,7 @@ int main() {
         throw runtime_error("Could not get password");
     }
 
+    //check password follows guidelines and hash it for security
     passwordChecker(password);
 
 
@@ -53,8 +55,12 @@ int main() {
         login(username, hashedpassword);
     }
 
-    User currentUser = User(username, hashedpassword);
+    //create user and hotel objects, then print menu
     Hotel currentHotel;
+    User currentUser = User(username, hashedpassword);
+    if(currentUser.getRoomNum() != 0) {
+        currentUser.setRoom(currentHotel.getRoom(currentUser.getRoomNum()));
+    }
 
     printWelcomeMenu(currentUser, currentHotel);
 
@@ -62,6 +68,7 @@ int main() {
 }
 
 void passwordChecker(string &password) {
+    //password must start with letter
     if(isdigit(password[0])) {
         cout << "password can't start with number plase try again" << endl;
         if(not(cin >> password)) {
@@ -83,15 +90,18 @@ string hashFunction(const string &password) {
 }
 
 void registerFirstTime(string &username, string &hashedpassword) {
+    //get sqlite database ready
     sqlite3* DB;
     sqlite3_stmt* stmt;
     int exit = sqlite3_open("login.db", &DB);
 
+    //error message
     if(exit != SQLITE_OK) {
          cout << "Failed to open database: " << sqlite3_errmsg(DB) << endl;
         return;
     }
 
+    //insert username and password into database if registering for the first time
     string sqlstatement = "INSERT INTO Users (username, pass) VALUES (?, ?);";
 
     int prepare = sqlite3_prepare_v2(DB, sqlstatement.c_str(), -1, &stmt, NULL);
@@ -119,10 +129,12 @@ void registerFirstTime(string &username, string &hashedpassword) {
 }
 
 void login(string &username, string &hashedpassword) {
+    //get sqlite open
     sqlite3* DB;
     sqlite3_stmt* stmt;
     int exit = sqlite3_open("login.db", &DB);
 
+    //read from database and see username and password exist within
     string sqlstatement = "SELECT * FROM Users WHERE username = ? AND pass = ?";
     int prepare = sqlite3_prepare_v2(DB, sqlstatement.c_str(), -1, &stmt, NULL);
     if (prepare != SQLITE_OK) {
@@ -150,19 +162,26 @@ void login(string &username, string &hashedpassword) {
     sqlite3_close(DB);
 }
 
-void printWelcomeMenu(User &currentUser, const Hotel &currentHotel) {
+void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
     cout << "Welcome to *** hotel. We hope you have a good time" << endl;
 
     cout << "Type c if you want to see avilable rooms" << endl;
     cout << "Type l if you are ready to leave and check out" << endl;
-    cout << "Type r if you want to go to the resturant" << endl;
+    cout << "Type g if you want to go to the casino" << endl;
 
+    cout << "Make sure to log out when you are done or progress may not be saved" << endl;
+    cout << currentUser.getRoomNum() << endl;
     char input;
     if(not(cin >> input)) {
         throw runtime_error("Couldn't get input");
     }
 
     if(input == 'c') {
-        currentUser.logIn(currentHotel);
+        currentHotel.checkIn(currentUser);
+        printWelcomeMenu(currentUser, currentHotel);
+    }
+
+    if(input == 'l') {
+        currentUser.logOut();
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Room.hpp"
+#include "User.hpp"
 #include <vector>
 
 using std::vector;
@@ -12,6 +13,7 @@ class Hotel {
         Hotel();
         ~Hotel();
         void printAvilableRooms();
-        void checkIn(int roomNum);
+        void checkIn(User &currentUser);
         void checkOut();
+        Room* getRoom(int roomNum);
 };

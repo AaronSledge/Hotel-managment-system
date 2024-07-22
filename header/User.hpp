@@ -2,25 +2,22 @@
 
 #include <string>
 #include "Room.hpp"
-#include "Hotel.hpp"
 using std::string;
 
 class User{
     private:
         string username;
         string password;
-        double balance;
+        int balance;
+        int roomNum;
         Room* myRoom;
 
     public:
-        User(const string &username, const string &password) : username(username), password(password) {
-            balance = 200.0;
-            myRoom = nullptr;
-        } 
+        User(const string &userName, const string &passWord);
         double getBalance();
         string getUsername();
-        void logIn(Hotel currentHotel);
         void logOut();
-        void setRoomNum(int number);
+        void setRoom(Room* currentRoom);
         int getRoomNum();
+        Room* getRoom();
 };

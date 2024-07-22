@@ -7,3 +7,11 @@ int Room::getRoomNum() {
 bool Room::isRoomAvilable() {
     return isAvilable;
 }
+
+void Room::setAvilable() {
+    isAvilable = true;
+}
+
+void Room::setTaken() {
+    isAvilable = false;
+}

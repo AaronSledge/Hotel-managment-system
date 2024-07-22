@@ -1,4 +1,5 @@
 #include "../header/Hotel.hpp"
+#include "../header/User.hpp"
 #include <sqlite3.h>
 #include <iostream>
 
@@ -44,4 +45,29 @@ void Hotel::printAvilableRooms() {
             std::cout << currentRoom->getRoomNum() << std::endl;
         }
     }
+}
+
+Room* Hotel::getRoom(int roomNum) {
+    for(Room* currentRoom: roomList) {
+        if(currentRoom->getRoomNum() == roomNum) {
+            currentRoom->setTaken();
+            return currentRoom;
+        }
+    }
+
+    return nullptr;
+}
+
+void Hotel::checkIn(User &currentUser) {
+    std::cout << "Here is all the avilable rooms numbers" << std::endl;
+    printAvilableRooms();
+    std::cout << "Choose from the list what room number you want. The 100s is the first floor, the 200s is the second floor, and so on" << std::endl;
+    int roomNum;
+    if(not(std::cin >> roomNum)) {
+        throw std::runtime_error("couldn't get runtime error");
+    }
+
+    Room* currentRoom = getRoom(roomNum);
+    currentUser.setRoom(currentRoom);
+    
 }

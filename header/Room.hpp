@@ -11,4 +11,6 @@ class Room {
         int getRoomNum();
         bool isRoomAvilable();
         void cleanService();
+        void setAvilable();
+        void setTaken();
 };
