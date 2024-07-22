@@ -15,3 +15,11 @@ void Room::setAvilable() {
 void Room::setTaken() {
     isAvilable = false;
 }
+
+void Room::checkOut() {
+    helperCheckOut();
+}
+
+void Room::helperCheckOut() {
+    roomNum = 0;
+}

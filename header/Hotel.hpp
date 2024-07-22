@@ -14,6 +14,6 @@ class Hotel {
         ~Hotel();
         void printAvilableRooms();
         void checkIn(User &currentUser);
-        void checkOut();
+        void checkOut(User &currentUser);
         Room* getRoom(int roomNum);
 };

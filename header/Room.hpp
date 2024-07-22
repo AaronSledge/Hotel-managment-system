@@ -4,6 +4,7 @@ class Room {
     private:
         bool isAvilable;
         int roomNum;
+        void helperCheckOut();
     
     public:
         Room(int roomNum, bool isAvilable) : roomNum(roomNum), isAvilable(isAvilable) {}
@@ -13,4 +14,5 @@ class Room {
         void cleanService();
         void setAvilable();
         void setTaken();
+        void checkOut();
 };

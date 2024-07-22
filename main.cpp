@@ -23,11 +23,15 @@ void printWelcomeMenu(User &currentUser, Hotel &currentHotel);
 
 int main() {
     //prompt user to sign in for the first time or login existing account
-    cout << "Are you signing in for the first time" << endl;
-    string firstTime;
+    cout << "Are you signing in for the first time (y/n)" << endl;
+    char firstTime;
     if(not(cin >> firstTime)) {
         throw runtime_error("Couldn't get input");
     }
+
+    tolower(firstTime); //turns input lowercase
+
+    
     string username;
     string password;
     cout << "Please Enter Username" << endl;
@@ -48,10 +52,10 @@ int main() {
 
     string hashedpassword = hashFunction(password);
 
-    if(firstTime == "yes") {
+    if(firstTime == 'y') {
        registerFirstTime(username, hashedpassword); 
     }
-    else if(firstTime == "no") {
+    else if(firstTime == 'n') {
         login(username, hashedpassword);
     }
 
@@ -165,8 +169,9 @@ void login(string &username, string &hashedpassword) {
 void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
     cout << "Welcome to *** hotel. We hope you have a good time" << endl;
 
-    cout << "Type c if you want to see avilable rooms" << endl;
-    cout << "Type l if you are ready to leave and check out" << endl;
+    cout << "Type c if you want to see and check in to avilable rooms" << endl;
+    cout << "Type o if you want to check out room" << endl;
+    cout << "Type l if you are ready to log out" << endl;
     cout << "Type g if you want to go to the casino" << endl;
 
     cout << "Make sure to log out when you are done or progress may not be saved" << endl;
@@ -180,6 +185,10 @@ void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
         printWelcomeMenu(currentUser, currentHotel);
     }
 
+    if (input == 'o') {
+        currentHotel.checkOut(currentUser);
+        printWelcomeMenu(currentUser, currentHotel);
+    }
     if(input == 'g') {
         currentUser.gamble();
         printWelcomeMenu(currentUser, currentHotel);

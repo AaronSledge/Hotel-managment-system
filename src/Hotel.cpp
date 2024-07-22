@@ -71,3 +71,37 @@ void Hotel::checkIn(User &currentUser) {
     currentUser.setRoom(currentRoom);
     
 }
+
+void Hotel::checkOut(User &currentUser) {
+    Room* userRoom = currentUser.getRoom();
+    userRoom->setAvilable();
+    userRoom->checkOut();
+    
+    sqlite3* DB;
+    sqlite3_stmt* stmt;
+    int exit = sqlite3_open("login.db", &DB);
+
+    if(exit != SQLITE_OK) {
+        std::cout << "Failed to open database: " << sqlite3_errmsg(DB) << std::endl;
+    }
+
+    const char* sqlstatement = "UPDATE Users SET roomNum = ? WHERE username = ? AND pass = ?;";
+    int prepare = sqlite3_prepare_v2(DB, sqlstatement, -1, &stmt, 0);
+    
+    if(prepare != SQLITE_OK) {
+        std::cout << "Failed to prepare statement: " << sqlite3_errmsg(DB) << std::endl;
+    }
+
+    sqlite3_bind_int(stmt, 1, 0);
+    sqlite3_bind_text(stmt, 2, currentUser.getUsername().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, currentUser.getPassword().c_str(), -1, SQLITE_STATIC);
+
+
+    int step = sqlite3_step(stmt);
+    if(step != SQLITE_DONE) {
+        std::cout << "Excution failed: " << sqlite3_errmsg(DB) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(DB);
+}

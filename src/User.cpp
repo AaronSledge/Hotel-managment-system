@@ -47,6 +47,9 @@ string User::getUsername() {
     return username;
 }
 
+string User::getPassword() {
+    return password;
+}
 
 void User::setRoom(Room* currentRoom) {
     myRoom = currentRoom;

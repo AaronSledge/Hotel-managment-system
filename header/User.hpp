@@ -16,7 +16,9 @@ class User{
         User(const string &userName, const string &passWord);
         double getBalance();
         string getUsername();
+        string getPassword();
         void logOut();
+        void checkOut();
         void setRoom(Room* currentRoom);
         int getRoomNum();
         Room* getRoom();
