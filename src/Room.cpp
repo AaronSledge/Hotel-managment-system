@@ -1,4 +1,10 @@
 #include "../header/Room.hpp"
+#include <iostream>
+#include <stdexcept>
+
+using std::cout;
+using std::endl;
+using std::cin;
 
 int Room::getRoomNum() {
     return roomNum;
@@ -23,3 +29,6 @@ void Room::checkOut() {
 void Room::helperCheckOut() {
     roomNum = 0;
 }
+
+
+

@@ -19,7 +19,7 @@ User::User(const string &userName, const string &passWord) {
     sqlite3* DB;
     sqlite3_stmt* stmt;
 
-    int exit = sqlite3_open("login.db", &DB);
+    int exit = sqlite3_open("C:/Users/User/OneDrive/Documents/Login-system/hotel-mangement-system/login.db", &DB);
 
     if(exit != SQLITE_OK) {
         cout << "Failed to open database: " << sqlite3_errmsg(DB) << endl;
@@ -133,7 +133,7 @@ void User::logOut() {
     sqlite3* DB;
     sqlite3_stmt* stmt;
     
-    int exit = sqlite3_open("login.db", &DB);
+    int exit = sqlite3_open("C:/Users/User/OneDrive/Documents/Login-system/hotel-mangement-system/login.db", &DB);
 
     if(exit != SQLITE_OK) {
         cout << "Failed to open database: " << sqlite3_errmsg(DB) << endl;

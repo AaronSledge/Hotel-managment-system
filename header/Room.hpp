@@ -12,6 +12,7 @@ class Room {
         int getRoomNum();
         bool isRoomAvilable();
         void cleanService();
+        void roomWelcome();
         void setAvilable();
         void setTaken();
         void checkOut();

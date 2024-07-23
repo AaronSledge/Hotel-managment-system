@@ -7,7 +7,7 @@ Hotel::Hotel() {
    sqlite3* DB;
    sqlite3_stmt* stmt;
 
-   int exit = sqlite3_open("login.db", &DB);
+   int exit = sqlite3_open("C:/Users/User/OneDrive/Documents/Login-system/hotel-mangement-system/login.db", &DB);
    
    if(exit != SQLITE_OK) {
     std::cout << "Failed to open database: " << sqlite3_errmsg(DB) << std::endl;
@@ -79,7 +79,7 @@ void Hotel::checkOut(User &currentUser) {
     
     sqlite3* DB;
     sqlite3_stmt* stmt;
-    int exit = sqlite3_open("login.db", &DB);
+    int exit = sqlite3_open("C:/Users/User/OneDrive/Documents/Login-system/hotel-mangement-system/login.db", &DB);
 
     if(exit != SQLITE_OK) {
         std::cout << "Failed to open database: " << sqlite3_errmsg(DB) << std::endl;
