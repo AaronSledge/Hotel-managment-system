@@ -158,6 +158,16 @@ void login(string &username, string &hashedpassword) {
     }
     else if(step == SQLITE_DONE) {
         cout << "No user found with the provided username and password." << endl;
+        cout << "Please eneter username or password again" << endl;
+        sqlite3_finalize(stmt);
+        sqlite3_close(DB);
+        cin >> username;
+        cin >> hashedpassword;
+        passwordChecker(hashedpassword);
+        hashedpassword = hashFunction(hashedpassword);
+        login(username, hashedpassword);
+        return;
+
     }
     else {
         cout << "Failed to execute statement: " << sqlite3_errmsg(DB) << endl;
@@ -185,8 +195,10 @@ void printWelcomeMenu(User &currentUser, Hotel &currentHotel) {
             cout << "Room is already picked" << endl;
             printWelcomeMenu(currentUser, currentHotel);
         }
-        currentHotel.checkIn(currentUser);
-        printWelcomeMenu(currentUser, currentHotel);
+        else {
+            currentHotel.checkIn(currentUser);
+            printWelcomeMenu(currentUser, currentHotel);
+        }
     }
 
     if (input == 'o') {
